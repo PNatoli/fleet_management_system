@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="fleet_management_system/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fleet_management_system.iml" filepath="$PROJECT_DIR$/.idea/modules/fleet_management_system.iml" group="fleet_management_system" />
+    </modules>
+  </component>
+</project>

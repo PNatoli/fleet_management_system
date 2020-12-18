@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors -->
+    <color name="lightBlue">#b0c4de</color>
+    <color name="black">#000000</color>
+
+    <!-- Background -->
+    <color name="background">#191919</color>
+    <color name="backgroundDark">#141414</color>
+    <color name="backgroundLight">#232323</color>
+
+    <!-- text -->
+    <color name="primaryText">#FFFFFF</color>
+    <color name="secondaryText">#808080</color>
+    <color name="lines">#808080</color>
+
+</resources>

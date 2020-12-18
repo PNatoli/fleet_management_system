@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:id="@+id/detailsRoot"
+    tools:context=".DetailsActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/primaryText"
+        android:textSize="32sp"
+        android:text="Bus Details"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/busDetailsTile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/tile_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <TextView
+            android:id="@+id/busIDLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bus ID"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/primaryText"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/busID"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryText"
+            android:layout_marginStart="130dp"
+            android:layout_marginEnd="12dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/busIDLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/vinNumberLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VIN Number"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/primaryText"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/busIDLabel" />
+
+        <TextView
+            android:id="@+id/vinNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryText"
+            android:layout_marginStart="130dp"
+            android:layout_marginEnd="12dp"
+
+            android:textSize="17sp"
+            android:maxLines="1"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/vinNumberLabel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/resaleTile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/tile_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/busDetailsTile"
+        app:layout_constraintBottom_toTopOf="@id/detailsScrollView">
+
+        <TextView
+            android:id="@+id/resaleLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resale Value"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/primaryText"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/resaleAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryText"
+            android:layout_marginStart="130dp"
+            android:layout_marginEnd="12dp"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/resaleLabel"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/detailsScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/tile_style"
+        android:scrollbarFadeDuration="0"
+        android:fadeScrollbars="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resaleTile">
+
+        <LinearLayout
+            android:id="@+id/detailsLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/busDetailsTileEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/makeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Make"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/primaryText"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/make"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryText"
+                    android:textColorHint="@color/lines"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="@color/lines"
+                    android:ems="10"
+                    android:hint="Make of bus"
+                    android:maxLength="56"
+                    android:inputType="textPersonName"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/makeLabel"
+                    app:layout_constraintBottom_toBottomOf="@id/makeLabel"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/modelLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Model"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/primaryText"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/makeLabel" />
+
+                <EditText
+                    android:id="@+id/model"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryText"
+                    android:textColorHint="@color/lines"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="@color/lines"
+                    android:ems="10"
+                    android:hint="Model of bus"
+                    android:maxLength="56"
+                    android:inputType="textPersonName"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/modelLabel"
+                    app:layout_constraintBottom_toBottomOf="@id/modelLabel"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/yearLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Year"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/primaryText"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/modelLabel" />
+
+                <EditText
+                    android:id="@+id/year"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryText"
+                    android:textColorHint="@color/lines"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="@color/lines"
+                    android:ems="10"
+                    android:hint="Year of make"
+                    android:maxLength="4"
+                    android:inputType="number"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/yearLabel"
+                    app:layout_constraintBottom_toBottomOf="@id/yearLabel"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/odometerLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Odometer"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/primaryText"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/yearLabel" />
+
+                <EditText
+                    android:id="@+id/odometer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryText"
+                    android:textColorHint="@color/lines"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="@color/lines"
+                    android:ems="10"
+                    android:hint="Odometer reading"
+                    android:maxLength="56"
+                    android:inputType="number"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/odometerLabel"
+                    app:layout_constraintBottom_toBottomOf="@id/odometerLabel"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/numOfWheelsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wheels"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/primaryText"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/odometerLabel" />
+
+                <EditText
+                    android:id="@+id/numOfWheels"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryText"
+                    android:textColorHint="@color/lines"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="@color/lines"
+                    android:ems="10"
+                    android:hint="Number of wheels"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/numOfWheelsLabel"
+                    app:layout_constraintBottom_toBottomOf="@id/numOfWheelsLabel"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/maxCapacityLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Max Capacity"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/primaryText"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/numOfWheelsLabel" />
+
+                <EditText
+                    android:id="@+id/maxCapacity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryText"
+                    android:textColorHint="@color/lines"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginEnd="12dp"
+                    android:backgroundTint="@color/lines"
+                    android:ems="10"
+                    android:hint="Max passengers"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/maxCapacityLabel"
+                    app:layout_constraintBottom_toBottomOf="@id/maxCapacityLabel"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/acLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Air Conditioner"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/primaryText"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/maxCapacityLabel" />
+
+                <RadioGroup
+                    android:id="@+id/acRadioButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="130dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/acLabel"
+                    app:layout_constraintBottom_toBottomOf="@id/acLabel">
+
+                    <RadioButton
+                        android:id="@+id/yesACRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/lines"
+                        android:textSize="16sp"
+                        android:theme="@style/RadioButtonStyle"
+                        android:checked="true"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/noACRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/lines"
+                        android:layout_marginStart="18sp"
+                        android:textSize="16sp"
+                        android:theme="@style/RadioButtonStyle"
+                        android:text="No" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/currentStatusLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current Status"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:textColor="@color/primaryText"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/acLabel" />
+
+                <RadioGroup
+                    android:id="@+id/currentStatusRadioButtons"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="vertical"
+                    android:layout_marginStart="130dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/currentStatusLabel"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/readyForUseRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Ready for use"
+                        android:textColor="@color/lines"
+                        android:textSize="16sp"
+                        android:theme="@style/RadioButtonStyle" />
+
+                    <RadioButton
+                        android:id="@+id/schedForMaintenanceRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/lines"
+                        android:textSize="16sp"
+                        android:theme="@style/RadioButtonStyle"
+                        android:text="Sched for maintenance" />
+
+                    <RadioButton
+                        android:id="@+id/undergoingRepairsRadio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Undergoing repairs"
+                        android:textColor="@color/lines"
+                        android:textSize="16sp"
+                        android:theme="@style/RadioButtonStyle" />
+
+
+                </RadioGroup>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_rounded_corners"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:elevation="8dp"
+        android:textColor="@color/black"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/detailsScrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
