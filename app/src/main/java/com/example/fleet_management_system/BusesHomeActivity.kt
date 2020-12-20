@@ -7,28 +7,57 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_buses_home.*
-import kotlinx.android.synthetic.main.activity_details.*
 import java.text.DecimalFormat
 
 class BusesHomeActivity : AppCompatActivity() {
-
     private val busesArray = ArrayList<BusModel>()
     private val busesMap = mutableMapOf<String, BusModel>()
     private val dbManager = DBManager()
+    val userPref = UserPref()
+    val firstEverLaunch = "true"
+    var firstOpen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buses_home)
         // setup nav bar
         setupActionBar()
+
         //start loader
         loader.visibility = View.VISIBLE
+
         // setupRecycler
         setupRecyclerView()
+
         // initialize db manager
         dbManager.initialize(this)
-        // create some mock buses
-        createBuses()
+
+        // create buses first time
+        checkIfFirstTimeRunningApp()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // only call if not first time running app (returning to screen to get updated info)
+        if (firstOpen){
+            getBuses()
+        }
+        firstOpen = true
+    }
+
+    private fun checkIfFirstTimeRunningApp(){
+        // create some mock buses if first time running app
+        // keep track of userPref
+        if (userPref.getPrefs(firstEverLaunch, this) == 0){
+            userPref.setPrefs(firstEverLaunch, this)
+            createBuses()
+            println("first time running app")
+        } else {
+            // we have buses already, just get them
+            getBuses()
+        }
+        // kill instance
+        userPref.finishAffinity()
     }
 
     fun pushToDetailsActivity(position: Int){
@@ -41,6 +70,7 @@ class BusesHomeActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         supportActionBar?.elevation = 0f
         supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.background)))
+        window.navigationBarColor = resources.getColor(R.color.background)
     }
 
     private fun setupRecyclerView(){
@@ -50,10 +80,13 @@ class BusesHomeActivity : AppCompatActivity() {
     }
 
     private fun createBuses(){
+        // only run on first time running app
+        // to get original data set back, uninstall and reload app
         // mock data
         val bus1 = BusModel(mutableMapOf(
             "id" to "1",
             "vin" to "219876231687ABC",
+            "busImageURL" to "https://www.continentalbuslines.com/wp-content/uploads/2016/10/Group-Charters-Section-6.jpg",
             "make" to "Ford",
             "model" to "Big Boy",
             "year" to 1970,
@@ -67,6 +100,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus2 = BusModel(mutableMapOf(
             "id" to "2",
             "vin" to "219876231687XYZ",
+            "busImageURL" to "https://www.brokenurl123.com",
             "make" to "Ford",
             "model" to "Giant Boy",
             "year" to 1980,
@@ -80,6 +114,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus3 = BusModel(mutableMapOf(
             "id" to "3",
             "vin" to "219876231687ABC",
+            "busImageURL" to "https://i1.wp.com/wheelchairtravel.org/wp-content/uploads/2017/08/hop-on-hop-off-bus-feature-facebook-2.jpg?fit=1200%2C630&ssl=1",
             "make" to "Ford",
             "model" to "Raptor",
             "year" to 1980,
@@ -93,6 +128,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus4 = BusModel(mutableMapOf(
             "id" to "4",
             "vin" to "219876231687XYZ",
+            "busImageURL" to "https://www.rusalia.com/wp-content/uploads/2018/05/Viajar-en-autobus-en-Rusia-Imagen-destacada.jpg",
             "make" to "Ford",
             "model" to "Flyer",
             "year" to 1970,
@@ -106,6 +142,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus5 = BusModel(mutableMapOf(
             "id" to "5",
             "vin" to "219876231687ABC",
+            "busImageURL" to "",
             "make" to "Chevy",
             "model" to "Ton",
             "year" to 1970,
@@ -119,6 +156,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus6 = BusModel(mutableMapOf(
             "id" to "6",
             "vin" to "219876231687XYZ",
+            "busImageURL" to "https://m.dw.com/image/16987108_401.jpg",
             "make" to "Chevy",
             "model" to "Rock",
             "year" to 1980,
@@ -132,6 +170,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus7 = BusModel(mutableMapOf(
             "id" to "7",
             "vin" to "219876231687ABC",
+            "busImageUrl" to "https://bioage.typepad.com/.a/6a00d8341c4fbe53ef0240a4eaaccc200b-550wi",
             "make" to "Chevy",
             "model" to "Toolbox RR",
             "year" to 1970,
@@ -145,6 +184,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus8 = BusModel(mutableMapOf(
             "id" to "8",
             "vin" to "219876231687XYZ",
+            "busImageURL" to "https://thedriven.io/wp-content/uploads/2020/04/screenshot-volgren.com_.au-2020.04.27-14_47_02-1280x720.jpg",
             "make" to "Dodge",
             "model" to "Big Bus",
             "year" to 1980,
@@ -158,6 +198,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus9 = BusModel(mutableMapOf(
             "id" to "9",
             "vin" to "219876231687ABC",
+            "busImageURL" to "",
             "make" to "Dodge",
             "model" to "Yellow",
             "year" to 1980,
@@ -171,6 +212,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus10 = BusModel(mutableMapOf(
             "id" to "10",
             "vin" to "219876231687XYZ",
+            "busImageURL" to "https://cdn.cnn.com/cnnnext/dam/assets/200826183306-adventures-overlandimage-from-ios.jpg",
             "make" to "Dodge ",
             "model" to "Stretch",
             "year" to 1970,
@@ -184,6 +226,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus11 = BusModel(mutableMapOf(
             "id" to "11",
             "vin" to "219876231687ABC",
+            "busImageURL" to "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/LT_471_%28LTZ_1471%29_Arriva_London_New_Routemaster_%2819522859218%29.jpg/1200px-LT_471_%28LTZ_1471%29_Arriva_London_New_Routemaster_%2819522859218%29.jpg",
             "make" to "Honda",
             "model" to "Type R",
             "year" to 1970,
@@ -197,6 +240,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus12 = BusModel(mutableMapOf(
             "id" to "12",
             "vin" to "219876231687XYZ",
+            "busImageURL" to "https://etimg.etb2bimg.com/photo/72057731.cms",
             "make" to "Honda",
             "model" to "Type RR",
             "year" to 1980,
@@ -210,6 +254,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus13 = BusModel(mutableMapOf(
             "id" to "13",
             "vin" to "219876231687ABC",
+            "busImageURL" to "https://www.ohio.edu/sites/ohio.edu.news/files/2020-01/go_bus_bws-1200px.jpg",
             "make" to "Big Yellow",
             "model" to "Lightening",
             "year" to 1970,
@@ -223,6 +268,7 @@ class BusesHomeActivity : AppCompatActivity() {
         val bus14 = BusModel(mutableMapOf(
             "id" to "14",
             "vin" to "219876231687XYZ",
+            "busImageURL" to "https://reneweconomy.com.au/wp-content/uploads/2017/08/ACT-electric-bus.jpg",
             "make" to "Buick",
             "model" to "Old Truck 11",
             "year" to 2001,
@@ -349,7 +395,7 @@ class BusesHomeActivity : AppCompatActivity() {
         }
         val bus = busesMap[busId]!!
 
-        if (bus.maxCapacity == null || bus.odometer == null || bus.currentStatus != CurrentStatusEnum.READY_FOR_USE || bus.year == null){
+        if (bus.maxCapacity != 24 || bus.maxCapacity != 36 || bus.maxCapacity == null || bus.odometer == null || bus.currentStatus != CurrentStatusEnum.READY_FOR_USE || bus.year == null){
             return "Does not qualify"
         }
 
@@ -394,6 +440,6 @@ class BusesHomeActivity : AppCompatActivity() {
 
         // format the resale value to dollars
         val formatter = DecimalFormat("$###,###,##0.00")
-        return formatter.format(price)
+        return "Bus ID $busId resale value: " + formatter.format(price)
     }
 }

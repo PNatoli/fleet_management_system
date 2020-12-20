@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import java.util.ArrayList
 
 class BusesRecyclerAdapter(var buses: ArrayList<BusModel>, var activity: BusesHomeActivity): RecyclerView.Adapter<BusesRecyclerAdapter.ViewHolder>() {
@@ -18,8 +19,12 @@ class BusesRecyclerAdapter(var buses: ArrayList<BusModel>, var activity: BusesHo
         holder.busCard.setOnClickListener {
             activity.pushToDetailsActivity(position)
         }
-        // add bus images to car
-        Glide.with(holder.itemView.context).load("https://e7.pngegg.com/pngimages/950/956/png-clipart-school-bus-transport-cartoon-school-bus-cartoon-character-photography.png").into(holder.busImageView)
+        // broken or missing url will use default image
+        // use glide, add bus images to cards
+        Glide.with(holder.itemView.context)
+            .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.no_photo_avail))
+            .load(buses[position].busImageUrl)
+            .into(holder.busImageView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

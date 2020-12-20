@@ -14,4 +14,6 @@
     <color name="secondaryText">#808080</color>
     <color name="lines">#808080</color>
 
+    <color name="ic_launcher_background">#FFFFFF</color>
+
 </resources>

@@ -43,7 +43,7 @@ data class BusModel(var busMap: MutableMap<String, Any>): Serializable {
 
     init {
         this.id = busMap["id"] as? String
-        this.busImageUrl = busMap["busImageUrl"] as? String
+        this.busImageUrl = busMap["busImageURL"] as? String
         this.vin = busMap["vin"] as? String
         this.make = busMap["make"] as? String
         this.model = busMap["model"] as? String
@@ -58,7 +58,7 @@ data class BusModel(var busMap: MutableMap<String, Any>): Serializable {
         getResaleValue()
     }
 
-    private fun getResaleValue(){
+    fun getResaleValue(){
         if (maxCapacity == null || odometer == null || currentStatus != CurrentStatusEnum.READY_FOR_USE || year == null){
             return
         }
@@ -67,7 +67,7 @@ data class BusModel(var busMap: MutableMap<String, Any>): Serializable {
         val startingPriceFor24Pass = 120000.0
         val startingPriceFor36Pass = 160000.0
 
-        var price: Double = 0.0
+        var price: Double
         when (maxCapacity) {
             // add appropriate amount to starting prices
             24 -> {
