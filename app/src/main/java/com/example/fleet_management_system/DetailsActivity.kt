@@ -17,7 +17,7 @@ import java.text.DecimalFormat
 class DetailsActivity : AppCompatActivity() {
     lateinit var bus: BusModel
     private val dbManager = DBManager()
-    val formatter = DecimalFormat("$###,###,##0.00")
+    private val formatter = DecimalFormat("$###,###,##0.00")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +28,7 @@ class DetailsActivity : AppCompatActivity() {
         // initialize db manager
         dbManager.initialize(this)
 
+        // bring in bus from last activity
         bus = intent.extras?.get("bus") as BusModel
 
         // fill bus data in
@@ -93,25 +94,6 @@ class DetailsActivity : AppCompatActivity() {
             }
         }
 
-        // update room
-        val updatedBus = BusModel(mutableMapOf(
-            "id" to bus.id.toString(),
-            "vin" to bus.vin.toString(),
-            "busImageURL" to bus.busImageUrl.toString(),
-            "make" to make.text,
-            "model" to model.text,
-            "year" to model.text,
-            "odometer" to odometer.text,
-            "wheels" to numOfWheels.text,
-            "maxCapacity" to maxCapacity.text,
-            "airCond" to yesACRadio.isChecked,
-            "currentStatus" to tempCurrentStatus
-        ))
-
-        dbManager.insertUpdateBusInDB(updatedBus){
-            println("done updating")
-        }
-
         // update model
         bus.make = make.text.toString()
         bus.model = model.text.toString()
@@ -122,6 +104,10 @@ class DetailsActivity : AppCompatActivity() {
         bus.airCond = yesACRadio.isChecked
         bus.currentStatus = tempCurrentStatus
         bus.getResaleValue()
+
+        dbManager.insertUpdateBusInDB(bus){
+            println("done updating")
+        }
 
         // update resale field if changed, provide feedback
         if (resaleAmount.text.toString() != formatter.format(bus.resaleValue)) {

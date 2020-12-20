@@ -58,51 +58,54 @@ data class BusModel(var busMap: MutableMap<String, Any>): Serializable {
         getResaleValue()
     }
 
-    fun getResaleValue(){
-        if (maxCapacity == null || odometer == null || currentStatus != CurrentStatusEnum.READY_FOR_USE || year == null){
-            return
-        }
+    fun getResaleValue() {
 
-        // constant for starting prices
-        val startingPriceFor24Pass = 120000.0
-        val startingPriceFor36Pass = 160000.0
+        if (currentStatus == CurrentStatusEnum.READY_FOR_USE && (maxCapacity == 24 || maxCapacity == 36)) {
+            var price: Double
 
-        var price: Double
-        when (maxCapacity) {
-            // add appropriate amount to starting prices
-            24 -> {
-                price = startingPriceFor24Pass
-                if (airCond){
-                    // +3600
-                    price += 3600.0
+            // constant for starting prices
+            val startingPriceFor24Pass = 120000.0
+            val startingPriceFor36Pass = 160000.0
+
+            when (maxCapacity) {
+                // add appropriate amount to starting prices
+                24 -> {
+                    price = startingPriceFor24Pass
+                    if (airCond) {
+                        // +3600
+                        price += 3600.0
+                    }
+                    if (year!! <= 1972) {
+                        // +40800
+                        price += 40800.0
+                    }
                 }
-                if (year!! <= 1972){
-                    // +40800
-                    price += 40800.0
+
+                36 -> {
+                    price = startingPriceFor36Pass
+                    if (airCond) {
+                        // +4800
+                        price += 4800.0
+                    }
+                    if (year!! <= 1972) {
+                        // +54400
+                        price += 54400.0
+                    }
+                }
+                else -> {
+                    return
                 }
             }
 
-            36 -> {
-                price = startingPriceFor36Pass
-                if (airCond){
-                    // +4800
-                    price += 4800.0
-                }
-                if (year!! <= 1972){
-                    // +54400
-                    price += 54400.0
-                }
+            if (odometer!! > 100000) {
+                price -= (odometer!! - 100000) * .1
             }
-            else -> {
-                return
-            }
-        }
 
-        if (odometer!! > 100000){
-            price -=  (odometer!! - 100000) * .1
+            // set resale value
+            this.resaleValue = price
+        } else {
+            // set to 0.0
+            this.resaleValue = 0.0
         }
-
-        // set resale value
-        this.resaleValue = price
     }
 }

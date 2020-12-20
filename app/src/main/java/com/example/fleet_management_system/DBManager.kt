@@ -38,7 +38,6 @@ class DBManager {
             busEnt.currentStatus = bus.currentStatus
 
             db!!.Bus_Entity_Dao().insertUpdateBus(busEnt)
-
             callback()
         }
     }

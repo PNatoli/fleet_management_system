@@ -1,7 +1,7 @@
 package com.example.fleet_management_system
 
 class DispatchGroup {
-    // waiting for DB calls to finish similiar to async await
+    // waiting for DB calls to finish, similar to async await
 
     private var count = 0
     private var runnable: Runnable? = null

@@ -15,6 +15,7 @@ class BusesRecyclerAdapter(var buses: ArrayList<BusModel>, var activity: BusesHo
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.busCard.clipToOutline = true
         holder.busImageView.clipToOutline = true
+        // TODO: sloppy, will not work with longer names.. fix if time
         holder.busDescription.text = "Bus ID: ${buses[position].id}\nMake:   ${buses[position].make}\nModel:  ${buses[position].model}\nYear:    ${buses[position].year}"
         holder.busCard.setOnClickListener {
             activity.pushToDetailsActivity(position)

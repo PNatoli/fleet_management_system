@@ -13,8 +13,8 @@ class BusesHomeActivity : AppCompatActivity() {
     private val busesArray = ArrayList<BusModel>()
     private val busesMap = mutableMapOf<String, BusModel>()
     private val dbManager = DBManager()
-    val userPref = UserPref()
-    val firstEverLaunch = "true"
+    private val userPref = UserPref()
+    private val firstEverLaunch = "true"
     var firstOpen = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,6 +79,7 @@ class BusesHomeActivity : AppCompatActivity() {
         busesRecyclerView.adapter = BusesRecyclerAdapter(busesArray,this)
     }
 
+    // only runs on first time we launch app to populate mock data
     private fun createBuses(){
         // only run on first time running app
         // to get original data set back, uninstall and reload app
@@ -344,7 +345,12 @@ class BusesHomeActivity : AppCompatActivity() {
         })
     }
 
+
     private fun getBuses(){
+        // clear array & map
+        busesArray.clear()
+        busesMap.clear()
+
         dbManager.getBusesFromDB {
             for (entity in it){
                 // convert into bus models
@@ -388,54 +394,59 @@ class BusesHomeActivity : AppCompatActivity() {
         }
     }
 
-    // not necessary for my implementation. This function is here to satisfy Question 2 on the assessment.
+    // **Not necessary for my implementation. This function is here to satisfy Question 2 on the assessment.
     private fun getResaleValue(busId: String): String{
         if (!busesMap.containsKey(busId)){
             return "Couldn't find bus id"
         }
         val bus = busesMap[busId]!!
+        var price = 0.0
 
-        if (bus.maxCapacity != 24 || bus.maxCapacity != 36 || bus.maxCapacity == null || bus.odometer == null || bus.currentStatus != CurrentStatusEnum.READY_FOR_USE || bus.year == null){
-            return "Does not qualify"
-        }
+        if (bus.currentStatus == CurrentStatusEnum.READY_FOR_USE && (bus.maxCapacity == 24 || bus.maxCapacity == 36)) {
 
-        // constant for starting prices
-        val startingPriceFor24Pass = 120000.0
-        val startingPriceFor36Pass = 160000.0
+            // constant for starting prices
+            val startingPriceFor24Pass = 120000.0
+            val startingPriceFor36Pass = 160000.0
 
-        var price: Double
-        when (bus.maxCapacity) {
-            // add appropriate amount to starting prices
-            24 -> {
-                price = startingPriceFor24Pass
-                if (bus.airCond){
-                    // +3600
-                    price += 3600.0
+            when (bus.maxCapacity) {
+                // add appropriate amount to starting prices
+                24 -> {
+                    price = startingPriceFor24Pass
+                    if (bus.airCond) {
+                        // +3600
+                        price += 3600.0
+                    }
+                    if (bus.year!! <= 1972) {
+                        // +40800
+                        price += 40800.0
+                    }
                 }
-                if (bus.year!! <= 1972){
-                    // +40800
-                    price += 40800.0
+
+                36 -> {
+                    price = startingPriceFor36Pass
+                    if (bus.airCond) {
+                        // +4800
+                        price += 4800.0
+                    }
+                    if (bus.year!! <= 1972) {
+                        // +54400
+                        price += 54400.0
+                    }
+                }
+                else -> {
+                    return "Max Capacity error"
                 }
             }
 
-            36 -> {
-                price = startingPriceFor36Pass
-                if (bus.airCond){
-                    // +4800
-                    price += 4800.0
-                }
-                if (bus.year!! <= 1972){
-                    // +54400
-                    price += 54400.0
-                }
+            if (bus.odometer!! > 100000) {
+                price -= (bus.odometer!! - 100000) * .1
             }
-            else -> {
-                return "Does not qualify"
-            }
-        }
 
-        if (bus.odometer!! > 100000){
-            price -=  (bus.odometer!! - 100000) * .1
+            // set resale value
+            bus.resaleValue = price
+        } else {
+            // set to 0.0
+            bus.resaleValue = 0.0
         }
 
         // format the resale value to dollars
