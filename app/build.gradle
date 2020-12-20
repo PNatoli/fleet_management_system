@@ -36,6 +36,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    kapt 'com.github.bumptech.glide:compiler:4.4.0'
+
     //room local DB
     def room_version = "2.2.4"
     implementation "androidx.room:room-runtime:$room_version"

@@ -27,6 +27,7 @@ class DBManager {
         myExecutor.execute {
             val busEnt = Bus_Entity(bus.id!!)
             busEnt.vin = bus.vin
+            busEnt.busImageURL = bus.busImageUrl
             busEnt.make = bus.make
             busEnt.model = bus.model
             busEnt.year = bus.year

@@ -1,10 +1,15 @@
 package com.example.fleet_management_system
 
+import android.app.Activity
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_details.*
+import java.text.DecimalFormat
 
 class DetailsActivity : AppCompatActivity() {
     lateinit var bus: BusModel
@@ -19,6 +24,11 @@ class DetailsActivity : AppCompatActivity() {
 
         // fill bus data in
         setData()
+
+        // set listener for save button
+        saveButton.setOnClickListener {
+            handleSaveData()
+        }
     }
 
     private fun setData(){
@@ -49,23 +59,33 @@ class DetailsActivity : AppCompatActivity() {
             CurrentStatusEnum.UNDERGOING_REPAIRS -> undergoingRepairsRadio.isChecked = true
         }
 
+        // format the resale value to dollars
+        val formatter = DecimalFormat("$###,###,##0.00")
         if (bus.resaleValue > 0.0){
-            resaleAmount.text = bus.resaleValue.toString()
+            resaleAmount.text = formatter.format(bus.resaleValue)
         } else {
-            resaleAmount.text = "N/A"
+            resaleAmount.text = "Does not qualify"
         }
     }
 
-    fun saveData(){
-        // validation
+    private fun handleSaveData(){
+        // validation not necessary due to keyboard inputs and max length on fields
+        // drop keyboard
+        hideSoftKeyboard(this)
+
         // update room
+
+
         // update model
+
         // run bus.getResaleValue
-        // update resalefield
-    }
 
-    fun calculateResale(){
+        // update resale field
 
+        // feedback to user
+        val toast = Toast.makeText(this,"All changes saved", Toast.LENGTH_LONG)
+        toast.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 300)
+        toast.show()
     }
 
     // navigation back
@@ -88,5 +108,12 @@ class DetailsActivity : AppCompatActivity() {
         supportActionBar?.elevation = 0f
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.background)))
+    }
+
+    private fun hideSoftKeyboard(activity: Activity){
+        if(activity.currentFocus != null) {
+            val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, 0)
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.example.fleet_management_system
 
 import androidx.room.TypeConverter
 import java.io.Serializable
+import java.text.DecimalFormat
 
 enum class CurrentStatusEnum{READY_FOR_USE, SCHEDULED_FOR_MAINTENANCE, UNDERGOING_REPAIRS}
 
@@ -28,6 +29,7 @@ class Converters {
 
 data class BusModel(var busMap: MutableMap<String, Any>): Serializable {
     var id: String? = "N/A"
+    var busImageUrl: String? = ""
     var vin: String? = "N/A"
     var make: String? = ""
     var model: String? = ""
@@ -41,6 +43,7 @@ data class BusModel(var busMap: MutableMap<String, Any>): Serializable {
 
     init {
         this.id = busMap["id"] as? String
+        this.busImageUrl = busMap["busImageUrl"] as? String
         this.vin = busMap["vin"] as? String
         this.make = busMap["make"] as? String
         this.model = busMap["model"] as? String
@@ -60,25 +63,39 @@ data class BusModel(var busMap: MutableMap<String, Any>): Serializable {
             return
         }
 
+        // constant for starting prices
+        val startingPriceFor24Pass = 120000.0
+        val startingPriceFor36Pass = 160000.0
+
         var price: Double = 0.0
-        price = when (maxCapacity) {
+        when (maxCapacity) {
+            // add appropriate amount to starting prices
             24 -> {
-                120000.0
+                price = startingPriceFor24Pass
+                if (airCond){
+                    // +3600
+                    price += 3600.0
+                }
+                if (year!! <= 1972){
+                    // +40800
+                    price += 40800.0
+                }
             }
+
             36 -> {
-                160000.0
+                price = startingPriceFor36Pass
+                if (airCond){
+                    // +4800
+                    price += 4800.0
+                }
+                if (year!! <= 1972){
+                    // +54400
+                    price += 54400.0
+                }
             }
             else -> {
                 return
             }
-        }
-
-        if (airCond){
-            price += price * .03
-        }
-
-        if (year!! <= 1972){
-            price += price * .34
         }
 
         if (odometer!! > 100000){

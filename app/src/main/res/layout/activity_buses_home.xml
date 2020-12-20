@@ -12,21 +12,48 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:textColor="@color/primaryText"
         android:textSize="32sp"
-        android:text="Super Transportation Co"
+        android:text="Super Transportation Co."
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/secondaryText"
+        android:layout_marginStart="16dp"
+        android:textSize="18sp"
+        android:text="Fleet Management System"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/busesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        android:scrollbarFadeDuration="0"
+        android:fadeScrollbars="false"
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarThumbVertical="@color/lightBlue"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/subtitle"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@color/background">
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/loader"
+        style="@android:style/Widget.Holo.ProgressBar.Large"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

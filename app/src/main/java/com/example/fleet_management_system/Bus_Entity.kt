@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class Bus_Entity (
     @PrimaryKey var id: String,
     @ColumnInfo(name = "vin") var vin: String? = "N/A",
+    @ColumnInfo(name = "busImageURL") var busImageURL: String? = "",
     @ColumnInfo(name = "make") var make: String? = "",
     @ColumnInfo(name = "model") var model:  String? = "",
     @ColumnInfo(name = "year") var year: Int? = null,
