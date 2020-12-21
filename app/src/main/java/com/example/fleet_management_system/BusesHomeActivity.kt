@@ -40,6 +40,8 @@ class BusesHomeActivity : AppCompatActivity() {
         super.onResume()
         // only call if not first time running app (returning to screen to get updated info)
         if (firstOpen){
+            //start loader
+            loader.visibility = View.VISIBLE
             getBuses()
         }
         firstOpen = true
@@ -344,7 +346,6 @@ class BusesHomeActivity : AppCompatActivity() {
             getBuses()
         })
     }
-
 
     private fun getBuses(){
         // clear array & map
